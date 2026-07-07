@@ -23,13 +23,16 @@ const tabuada = () =>{
 const numerosPares = () => {
     let valorInserido = pegarValor();
     let numerospareslista= [];
+    let quantidade = 0
     if (valorInserido >= 1){
         for (let cont = 1; cont <= valorInserido; cont++){
         if(cont % 2 === 0) {
             numerospareslista.push(cont);
+            quantidade += 1
         }
     }
-        resultado.innerText = numerospareslista.join(", ");
+        resultado.innerText = `Há ${quantidade} números pares de 0 a ${valorInserido} \n\n` + numerospareslista.join(", ");
+        
     }
     
     else{
@@ -77,41 +80,28 @@ const validarPrimo = () => {
     let valorInserido = pegarValor();
     let contador_de_divisiveis = 0;
 
+    if (valorInserido > 0){
+        
+        for (let cont = valorInserido; cont > 0; cont--){
 
-    for (let cont = valorInserido; cont > 0; cont--){
-
-        if (valorInserido % cont == 0){
-            contador_de_divisiveis += 1
+            if (valorInserido % cont == 0){
+                contador_de_divisiveis += 1
+            }
+        }
+        /*Valida se o número é divisivel por mais de duas vezes (1 e ele mesmo), se sim irá printar que é primo, senão irá printar que não é*/
+        if (valorInserido > 1 && contador_de_divisiveis == 2){
+            resultado.innerText = valorInserido + " é um número primo";
+        }
+        else{
+            resultado.innerText = valorInserido + " não é um número primo";
         }
     }
-    /*Valida se o número é divisivel por mais de duas vezes (1 e ele mesmo), se sim irá printar que é primo, senão irá printar que não é*/
-    if (valorInserido > 1 && contador_de_divisiveis == 2){
-        resultado.innerText = valorInserido + " é um número primo";
-    }
     else{
-        resultado.innerText = valorInserido + " não é um número primo";
-
+        resultado.innerText = "Número inválido !";
     }
+    
 }
 
-/*Um objeto com as funçoes*/
-const operacoes = {
-    tabuada: tabuada,
-    pares: numerosPares,
-    soma: somaIntervalo,
-    fatorial: fatorial,
-    primo: validarPrimo
-};
-
-/*--------------------------EventListeners ----------------------------*/
-
-/*Pega todos os botões e conecta o evento de clique, quando cliclado executa a funções correspondente da data-operacao*/
-document.querySelectorAll(".btn").forEach((botao) => {
-    botao.addEventListener("click", () => {
-        const operacao = botao.dataset.operacao;
-        operacoes[operacao]();
-    });
-});
 
 /*Copia o resultado com um clique*/
 resultado.addEventListener("click", () => {
